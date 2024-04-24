@@ -54,6 +54,22 @@ func (s *BitSet) Clear() {
 	s.words = make([]uint64, 0)
 }
 
+// Elements return all elements from the set
+func (s *BitSet) Elements() []int {
+	var elements []int
+	for i, word := range s.words {
+		if word == 0 {
+			continue
+		}
+		for j := 0; j < 64; j++ {
+			if word&(1<<uint(j)) != 0 {
+				elements = append(elements, 64*i+j)
+			}
+		}
+	}
+	return elements
+}
+
 // Len return the numbers of the elements
 func (s *BitSet) Len() int {
 	if len(s.words) == 0 {

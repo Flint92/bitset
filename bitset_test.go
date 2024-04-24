@@ -49,3 +49,16 @@ func TestBitSet_Copy(t *testing.T) {
 	require.NotEqual(t, &x, &y)
 
 }
+
+
+func TestBitSet_Elements(t *testing.T) {
+	var x BitSet
+	x.Add(1)
+	x.Add(144)
+	x.Add(9)
+
+	elements := x.Elements()
+	require.Equal(t, elements[0], 1)
+	require.Equal(t, elements[1], 9)
+	require.Equal(t, elements[2], 144)
+}

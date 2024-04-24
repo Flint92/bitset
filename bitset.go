@@ -35,10 +35,17 @@ func (s *BitSet) Remove(x int) bool {
 	word, bit := x/64, uint(x%64)
 	s.words[word] &^= 1 << bit
 
-	if s.words[word] == 0 {
-		s.words = append(s.words[:word], s.words[word+1:]...)
+	nonZeroWordIndex := -1
+	// find the first non-zero word
+	for i := len(s.words) - 1; i >= 0; i-- {
+		if s.words[i] != 0 {
+			nonZeroWordIndex = i
+			break
+		}
 	}
 
+	s.words = s.words[:nonZeroWordIndex+1]
+	
 	return true
 }
 
